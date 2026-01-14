@@ -1,52 +1,53 @@
-# Task 1: Machine Learning Project 🤖
+# 🎵 Music Recommendation & Prediction System
 
-## 📌 Project Overview
-This repository contains the solution for **Task 1** of my AI/ML Internship. The goal of this project was to build a Machine Learning model to analyze the dataset and make predictions based on the given features.
+## 1. Project Overview
+This project aims to build a **Machine Learning Classification Model** capable of predicting whether a user will listen to a song on **Repeat (1)** or **Not (0)**. By analyzing various audio features (such as acousticness, danceability, energy, and popularity), the system identifies patterns that contribute to a song's "replay value."
 
-**Notebook File:** [task1.ipynb](task1/task1.ipynb)
+---
 
-## 📂 Dataset Details
-- **Source:** [Kaggle / Internship Provider]
-- **Target Variable:** The model predicts `[Yahan likhein kya predict kiya: e.g., Survival Status / Flower Species / Price]`
-- **Key Features:** The dataset includes features like `[Column Names e.g., Age, Gender, Income, etc.]`.
+## 2. Dataset & Features
+The dataset consists of various musical attributes for different tracks.
+* **Input Features ($X$):** Numeric audio traits like `acousticness`, `danceability`, `energy`, `instrumentalness`, `liveness`, `loudness`, `speechiness`, `tempo`, etc.
+* **Target Variable ($y$):** A binary classification:
+    * `1`: High likelihood of repeat (Hit/Liked).
+    * `0`: Low likelihood of repeat (Skip).
 
-## 🛠️ Tech Stack Used
-- **Python** (Core Language)
-- **Pandas** (Data Manipulation)
-- **NumPy** (Numerical Operations)
-- **Matplotlib & Seaborn** (Data Visualization)
-- **Scikit-Learn** (Machine Learning Modeling)
+---
 
-## ⚙️ Steps Implemented in this Task
-In this notebook, I have performed the following steps:
+## 3. Methodology Pipeline
 
-1.  **Data Loading & Inspection**:
-    - Loaded the dataset using Pandas.
-    - Checked for missing values and data types.
+### A. Data Preprocessing
+1.  **Cleaning:** Removed irrelevant identifiers such as `Unnamed: 0`, `track_id`, `artists`, `album_name`, and `track_name`.
+2.  **Handling Missing Data:** Dropped null values and removed duplicate records to ensure data quality.
 
-2.  **Data Preprocessing**:
-    - Handled missing values (Imputation/Removal).
-    - Encoded categorical variables (converted text to numbers).
-    - Scaled features for better model performance.
+### B. Feature Engineering (The "Hit" Score)
+Since the dataset did not have a direct "target" label initially, we engineered one using a weighted formula based on key success metrics:
+> $$Score = (Popularity_{norm} \times 0.4) + (Danceability \times 0.3) + (Energy \times 0.3)$$
 
-3.  **Exploratory Data Analysis (EDA)**:
-    - Visualized correlations using Heatmaps.
-    - Analyzed feature distributions using Histograms/Boxplots.
+* **Thresholding:** Songs scoring in the **top 30%** (quantile > 0.7) were labeled as **1 (Repeat)**, and the rest as **0**.
 
-4.  **Model Building**:
-    - Split the data into **Training** and **Testing** sets.
-    - Trained the model using **[Model Name e.g., Logistic Regression / Decision Tree]**.
+### C. Data Balancing
+The dataset was initially imbalanced. To prevent the model from being biased toward the majority class (0), we used **Downsampling (Resample)** to match the number of minority class samples, resulting in a perfectly balanced 50/50 dataset.
 
-5.  **Model Evaluation**:
-    - Evaluated performance using **Accuracy Score**, **Precision**, and **Recall**.
-    - Generated a Confusion Matrix to visualize predictions.
+---
 
-## 📊 Results
-- **Model Used:** [e.g., Logistic Regression]
-- **Accuracy Achieved:** [e.g., 85%]
-- **Key Insight:** [Ek line likhein jo data se pata chali, e.g., "Gender had the highest impact on survival rate."]
+## 4. Model Architecture
+* **Algorithm:** [Random Forest Classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+* **Hyperparameters:**
+    * `n_estimators`: 100 (Number of trees)
+    * `max_depth`: 15 (Tree depth to capture complex patterns)
+* **Scaling:** Applied `StandardScaler` to normalize feature distributions, ensuring the model treats all audio features equally.
 
-## 🚀 How to Run
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/arsalan-khatri/AI-ML-internship-tasks.git](https://github.com/arsalan-khatri/AI-ML-internship-tasks.git)
+---
+
+## 5. Performance & Results
+The model was evaluated on a 20% test set.
+* **Final Accuracy:** **~97.79%**
+* **Evaluation Metrics:** The Confusion Matrix indicates minimal misclassifications, and the Feature Importance plot highlights which audio attributes contribute most to a song's success.
+
+---
+
+## 6. Real-time Prediction
+A custom function `predict_new_song()` was implemented to accept raw audio features of a new track and output:
+1.  **Prediction:** Repeat vs. No Repeat.
+2.  **Confidence Score:** The probability percentage of the prediction.
