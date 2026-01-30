@@ -1,53 +1,42 @@
-# 🎵 Music Recommendation & Prediction System
+# 🐦 Twitter Sentiment Analysis - Rhombix Technologies Task 2
 
-## 1. Project Overview
-This project aims to build a **Machine Learning Classification Model** capable of predicting whether a user will listen to a song on **Repeat (1)** or **Not (0)**. By analyzing various audio features (such as acousticness, danceability, energy, and popularity), the system identifies patterns that contribute to a song's "replay value."
-
----
-
-## 2. Dataset & Features
-The dataset consists of various musical attributes for different tracks.
-* **Input Features ($X$):** Numeric audio traits like `acousticness`, `danceability`, `energy`, `instrumentalness`, `liveness`, `loudness`, `speechiness`, `tempo`, etc.
-* **Target Variable ($y$):** A binary classification:
-    * `1`: High likelihood of repeat (Hit/Liked).
-    * `0`: Low likelihood of repeat (Skip).
+### Developed by: Arsalan Khatri
+**Position:** AI/ML Intern  
+**Project:** Sentiment Analysis of 1.6 Million Tweets  
+**Education:** AI Engineer (SMI University, 2025 Graduated)
 
 ---
 
-## 3. Methodology Pipeline
-
-### A. Data Preprocessing
-1.  **Cleaning:** Removed irrelevant identifiers such as `Unnamed: 0`, `track_id`, `artists`, `album_name`, and `track_name`.
-2.  **Handling Missing Data:** Dropped null values and removed duplicate records to ensure data quality.
-
-### B. Feature Engineering (The "Hit" Score)
-Since the dataset did not have a direct "target" label initially, we engineered one using a weighted formula based on key success metrics:
-> $$Score = (Popularity_{norm} \times 0.4) + (Danceability \times 0.3) + (Energy \times 0.3)$$
-
-* **Thresholding:** Songs scoring in the **top 30%** (quantile > 0.7) were labeled as **1 (Repeat)**, and the rest as **0**.
-
-### C. Data Balancing
-The dataset was initially imbalanced. To prevent the model from being biased toward the majority class (0), we used **Downsampling (Resample)** to match the number of minority class samples, resulting in a perfectly balanced 50/50 dataset.
+## Project Overview
+This project is part of my internship at Rhombix Technologies. The goal is to build a machine learning model capable of classifying the sentiment of tweets as either **Positive** or **Negative**. This analysis helps in understanding public opinion and brand perception on social media.
 
 ---
 
-## 4. Model Architecture
-* **Algorithm:** [Random Forest Classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
-* **Hyperparameters:**
-    * `n_estimators`: 100 (Number of trees)
-    * `max_depth`: 15 (Tree depth to capture complex patterns)
-* **Scaling:** Applied `StandardScaler` to normalize feature distributions, ensuring the model treats all audio features equally.
+## Dataset Information
+The project uses the **Sentiment140** dataset. 
+* **Note:** Due to GitHub's file size limit (100MB), the raw CSV dataset (227MB) is not uploaded here.
+* **Download Source:** [Kaggle - Sentiment140 Dataset](https://www.kaggle.com/datasets/kazanova/sentiment140)
+* **Setup:** Place the `training.1600000.processed.noemoticon.csv` file inside a folder named `/data` in your local directory to run the notebook.
 
 ---
 
-## 5. Performance & Results
-The model was evaluated on a 20% test set.
-* **Final Accuracy:** **~97.79%**
-* **Evaluation Metrics:** The Confusion Matrix indicates minimal misclassifications, and the Feature Importance plot highlights which audio attributes contribute most to a song's success.
+## Technical Workflow
+* **Preprocessing:** * Removal of URLs, Mentions (@), and special characters.
+    * Stopwords removal using NLTK.
+    * Word Stemming using **PorterStemmer**.
+* **Feature Extraction:** Used **TF-IDF Vectorizer** (50,000 features) to convert text into numerical data.
+* **Algorithm:** **Logistic Regression** was chosen for its high efficiency and accuracy in binary text classification.
+* **Deep Learning (Optional):** Integration with **BERT (RoBERTa)** for context-aware sentiment detection.
 
 ---
 
-## 6. Real-time Prediction
-A custom function `predict_new_song()` was implemented to accept raw audio features of a new track and output:
-1.  **Prediction:** Repeat vs. No Repeat.
-2.  **Confidence Score:** The probability percentage of the prediction.
+## Key Features
+* **Scalability:** Trained on 1.6 million tweets.
+* **Deployment Ready:** The trained model and vectorizer are saved as `.pkl` files for real-time integration.
+* **Insights:** Visualized the top 10 words that trigger positive and negative sentiments.
+
+---
+
+## Results
+* **Accuracy:** ~77.77%
+* **Precision/Recall:** Balanced performance across both positive and negative classes.
