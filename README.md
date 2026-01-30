@@ -16,7 +16,7 @@ The repository is organized by weekly/monthly tasks as per the internship schedu
 | Folder Name | Task Description | Status |
 | :--- | :--- | :--- |
 | **Task 1** | **Music Recommendation System** (Spotify-like prediction model) | ✅ Completed |
-| **Task 2** | **Image Recognition** (Pixel analysis & Face recognition) | ⏳ Pending |
+| **Task 2** | **Image Recognition** (Pixel analysis & Face recognition) | ✅ Completed |
 
 **Note:** As per instructions, intern is required to complete at least one task per domain/month.
 
