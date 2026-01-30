@@ -1,4 +1,4 @@
-# 🐦 Twitter Sentiment Analysis - Rhombix Technologies Task 2
+# Twitter Sentiment Analysis - Rhombix Technologies Task 2
 
 ### Developed by: Arsalan Khatri
 **Position:** AI/ML Intern  
@@ -40,3 +40,4 @@ The project uses the **Sentiment140** dataset.
 ## Results
 * **Accuracy:** ~77.77%
 * **Precision/Recall:** Balanced performance across both positive and negative classes.
+
